@@ -1,0 +1,119 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package Automato;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Point;
+
+/**
+ *
+ * @author Matheus Prachedes Batista
+ */
+public class Estado extends Entidade{
+    private int x;
+    private int y;
+    private String nome;
+    private boolean isfinal = true;
+    private boolean isInicial = false;
+    public static final int ray = 20;
+    private static int count = 0;
+    private String label = "";
+    
+    public String getLabel(){
+        return label;
+    }
+    public boolean isInicial(){
+        return isInicial;
+    }
+    public void setLabel(String label){
+        this.label = label;
+    }
+    
+    public String getNome(){
+        return nome;
+    }
+    
+    public int getX(){
+        return x;
+    }
+    
+    public int getY(){
+        return y;
+    }
+    
+    public int getRay(){
+        return ray;
+    }
+    
+    public Point getPoint(){
+        return new Point(x,y);
+    }
+    
+    public Estado(int x, int y){
+        updatePos(x, y);
+        nome = "E" + count;
+        count++;
+        this.isInicial = false;
+        this.isfinal = false;
+    }
+    
+    public void updatePos(int x,int y){
+        this.x = x;
+        this.y = y;
+    }
+    
+    public void draw(Graphics2D g){
+        g.setColor(Color.black);
+        g.fillOval( x-1 - ray , y-1 - ray, ray*2 + 2, ray*2 + 2);
+        
+        if(selected == false)g.setColor(Color.yellow);
+        else g.setColor(Color.blue);
+        g.fillOval(x-ray, y-ray, ray*2, ray*2);
+    
+        g.setColor(Color.black);
+        g.drawChars(nome.toCharArray(), 0, nome.length(), x-6 , y+3);
+        
+        if(this.isfinal)g.drawOval(x - (ray*3)/4 -1, y-(ray*3)/4-1,(ray*6)/4+1 , (ray*6)/4+1);
+        if(this.isInicial){
+            g.drawLine(x-ray, y, x-ray-15, y-15);
+            g.drawLine(x-ray, y, x-ray-15, y+15);
+            g.drawLine(x-ray-15, y-15, x-ray-15, y+15);
+        }
+    }
+    
+
+    
+    public boolean colide(int x, int y) {
+        double r =Math.sqrt(Math.pow(x- this.x,2) + Math.pow(y-this.y, 2)); 
+        if( r  < this.ray + 5 ){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean colide(Point p) {
+        return colide(p.x,p.y);
+    }
+    
+    public void setInicial(boolean isInicial){
+        this.isInicial = isInicial;
+    }
+    
+    public void setFinal(boolean isFinal) {
+        this.isfinal = isFinal;
+    }
+
+    public boolean isFinal() {
+        return isfinal;
+    }
+
+    
+    
+}
+

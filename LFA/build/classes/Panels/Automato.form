@@ -124,7 +124,7 @@
               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
               <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="scrollPaneImage" pref="358" max="32767" attributes="0"/>
+              <Component id="scrollPaneImage" pref="356" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -178,7 +178,10 @@
       <SubComponents>
         <Component class="javax.swing.JToggleButton" name="bttnPointer">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Pointer"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Images/cursor (1).png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Ponteiro"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder/>
@@ -191,7 +194,10 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="bttnCreateAutomato">
           <Properties>
-            <Property name="text" type="java.lang.String" value="CreateAutomato"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Images/circle-shape-outline.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Criar Novo Estado"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder/>
@@ -207,7 +213,10 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="bttnCreateTransicao">
           <Properties>
-            <Property name="text" type="java.lang.String" value="CreateTransicao"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Images/right-arrow.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Criar Transi&#xe7;&#xe3;o"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder/>
@@ -220,7 +229,10 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="bttnApagar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Apagar"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Images/cross-remove-sign.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Apagar"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder/>
@@ -243,7 +255,8 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Teste rapido"/>
+            <Property name="text" type="java.lang.String" value="Teste R&#xe1;pido"/>
+            <Property name="toolTipText" type="java.lang.String" value="Teste R&#xe1;pido"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder/>
@@ -259,7 +272,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Teste Esatdo por Estado"/>
+            <Property name="text" type="java.lang.String" value="Testar Estado por Estado"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder/>
@@ -275,7 +288,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButton3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Teste multiplas entradas"/>
+            <Property name="text" type="java.lang.String" value="Testar M&#xfa;ltiplas Entradas"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                 <BevelBorder/>

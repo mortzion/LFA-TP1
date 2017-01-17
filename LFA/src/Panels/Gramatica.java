@@ -73,7 +73,7 @@ public class Gramatica extends javax.swing.JPanel {
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        jButton1.setText("Teste Rapido");
+        jButton1.setText("Teste Rápido");
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -85,7 +85,7 @@ public class Gramatica extends javax.swing.JPanel {
         });
         jToolBar1.add(jButton1);
 
-        jButton2.setText("Teste Multiplas Entradas");
+        jButton2.setText("Testar Múltiplas Entradas");
         jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -138,7 +138,7 @@ public class Gramatica extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if(montarGramatica()){
-            MultiplasEntradas me = new MultiplasEntradas(pai, true, gramatica);
+            MultiplasEntradas me = new MultiplasEntradas(pai, true, gramatica,true);
             me.setVisible(true);
             me.toFront();
         }else{

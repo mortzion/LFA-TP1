@@ -210,14 +210,16 @@ public class Automato extends javax.swing.JPanel {
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
-        bttnPointer.setText("Pointer");
+        bttnPointer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cursor (1).png"))); // NOI18N
+        bttnPointer.setToolTipText("Ponteiro");
         bttnPointer.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bttnPointer.setFocusable(false);
         bttnPointer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bttnPointer.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(bttnPointer);
 
-        bttnCreateAutomato.setText("CreateAutomato");
+        bttnCreateAutomato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/circle-shape-outline.png"))); // NOI18N
+        bttnCreateAutomato.setToolTipText("Criar Novo Estado");
         bttnCreateAutomato.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bttnCreateAutomato.setFocusable(false);
         bttnCreateAutomato.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -229,14 +231,16 @@ public class Automato extends javax.swing.JPanel {
         });
         jToolBar1.add(bttnCreateAutomato);
 
-        bttnCreateTransicao.setText("CreateTransicao");
+        bttnCreateTransicao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/right-arrow.png"))); // NOI18N
+        bttnCreateTransicao.setToolTipText("Criar Transição");
         bttnCreateTransicao.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bttnCreateTransicao.setFocusable(false);
         bttnCreateTransicao.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bttnCreateTransicao.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(bttnCreateTransicao);
 
-        bttnApagar.setText("Apagar");
+        bttnApagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cross-remove-sign.png"))); // NOI18N
+        bttnApagar.setToolTipText("Apagar");
         bttnApagar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bttnApagar.setFocusable(false);
         bttnApagar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -246,7 +250,8 @@ public class Automato extends javax.swing.JPanel {
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
 
-        jButton1.setText("Teste rapido");
+        jButton1.setText("Teste Rápido");
+        jButton1.setToolTipText("Teste Rápido");
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -258,7 +263,7 @@ public class Automato extends javax.swing.JPanel {
         });
         jToolBar2.add(jButton1);
 
-        jButton2.setText("Teste Esatdo por Estado");
+        jButton2.setText("Testar Estado por Estado");
         jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -270,7 +275,7 @@ public class Automato extends javax.swing.JPanel {
         });
         jToolBar2.add(jButton2);
 
-        jButton3.setText("Teste multiplas entradas");
+        jButton3.setText("Testar Múltiplas Entradas");
         jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -302,7 +307,7 @@ public class Automato extends javax.swing.JPanel {
                 .addGap(4, 4, 4)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPaneImage, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+                .addComponent(scrollPaneImage, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -565,7 +570,7 @@ public class Automato extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if(view.verificaEstados()){
             view.montarAutomato(automato);
-            String cadeia = JOptionPane.showInputDialog(getParent(),"Insira a cadeia que ira ser reconhecida");
+            String cadeia = JOptionPane.showInputDialog(getParent(),"Insira a cadeia que irá ser reconhecida");
             if(cadeia == null)return;
             if(automato.verificar(cadeia)){
                 JOptionPane.showMessageDialog(this.getParent(), "A cadeia foi aceita");
@@ -574,15 +579,15 @@ public class Automato extends javax.swing.JPanel {
             }
             
         }else{
-            JOptionPane.showMessageDialog(this.getParent(),"O automato parece não estar completo\n"
-                    + "É necessario pelo menos 1 estado final e exatamente 1 estado inicial.");
+            JOptionPane.showMessageDialog(this.getParent(),"O autômato parece não estar completo.\n"
+                    + "É necessário pelo menos 1 estado final e exatamente 1 estado inicial.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if(view.verificaEstados()){
             view.montarAutomato(automato);
-            String cadeia = JOptionPane.showInputDialog(getParent(),"Insira a cadeia que ira ser reconhecida");
+            String cadeia = JOptionPane.showInputDialog(getParent(),"Insira a cadeia que irá ser reconhecida");
             if(cadeia == null)return;
             if(automato.verificar(cadeia)){
                 Stack<Integer> caminho = automato.getCaminho();
@@ -596,7 +601,7 @@ public class Automato extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(getParent(), "A cadeia não foi aceita");
             }        
         }else{
-            JOptionPane.showMessageDialog(this.getParent(),"O automato parece não estar completo\n"
+            JOptionPane.showMessageDialog(this.getParent(),"O autômato parece não estar completo.\n"
                     + "É necessario pelo menos 1 estado final e exatamente 1 estado inicial.");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -604,11 +609,11 @@ public class Automato extends javax.swing.JPanel {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if(view.verificaEstados()){
             view.montarAutomato(automato);
-            MultiplasEntradas me = new MultiplasEntradas(pai, true, automato);
+            MultiplasEntradas me = new MultiplasEntradas(pai, true, automato,false);
             me.setVisible(true);
             me.toFront();
         }else{
-            JOptionPane.showMessageDialog(this.getParent(),"O automato parece não estar completo\n"
+            JOptionPane.showMessageDialog(this.getParent(),"O autômato parece não estar completo.\n"
                     + "É necessario pelo menos 1 estado final e exatamente 1 estado inicial.");
         }
     }//GEN-LAST:event_jButton3ActionPerformed

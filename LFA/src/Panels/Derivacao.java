@@ -170,6 +170,10 @@ public class Derivacao extends javax.swing.JPanel {
             tamText2 = jTextField3.getText().length();
             if(this.jTextField3.getText().matches("[a-z]*[A-Z]?[a-z]*") == false)jTextField3.setBackground(Color.red);
             else jTextField3.setBackground(Color.white);
+            
+            if(this.jTextField1.getText().matches("[A-Z]?") == false)jTextField1.setBackground(Color.red);
+            else jTextField1.setBackground(Color.white);
+            
             if(this.jTextField1.getText().isEmpty() && this.jTextField3.getText().isEmpty()){
                 pai.removerDerivacao(this);
             }

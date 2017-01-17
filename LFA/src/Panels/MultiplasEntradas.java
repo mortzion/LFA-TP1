@@ -19,7 +19,8 @@ public class MultiplasEntradas extends javax.swing.JDialog {
 
     private ArrayList<PanelTextField> entradas;
     private ReconhecedorCadeia reconhecedor;
-    public MultiplasEntradas(java.awt.Frame parent, boolean modal, ReconhecedorCadeia reconhecedor) {
+    private boolean caseSensitive;
+    public MultiplasEntradas(java.awt.Frame parent, boolean modal, ReconhecedorCadeia reconhecedor,boolean caseSensitive) {
         super(parent, modal);
         initComponents();
         jPanel1.setLayout(new GridLayout(0,1));
@@ -29,6 +30,7 @@ public class MultiplasEntradas extends javax.swing.JDialog {
         jScrollPane1.revalidate();
         jScrollPane1.repaint();
         this.reconhecedor = reconhecedor;
+        this.caseSensitive = caseSensitive;
     }
 
     
@@ -42,6 +44,7 @@ public class MultiplasEntradas extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Multiplas entradas");
 
         jButton1.setText("Verificar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -79,7 +82,7 @@ public class MultiplasEntradas extends javax.swing.JDialog {
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -89,7 +92,7 @@ public class MultiplasEntradas extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -102,6 +105,12 @@ public class MultiplasEntradas extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         for(PanelTextField ptf : entradas){
+            if(caseSensitive == true){
+                String cadeia = ptf.getCadeia();
+                for(int i=0;i<cadeia.length();i++){
+                    //Verificar case sensitive
+                }
+            }
             reconhecedor.resetar();
             if(reconhecedor.verificar(ptf.getCadeia())){
                 ptf.setBackgroundTextField(Color.green);

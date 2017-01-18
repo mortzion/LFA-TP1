@@ -13,7 +13,7 @@ import java.awt.Point;
 
 /**
  *
- * @author Matheus Prachedes Batista
+ * @author Matheus Prachedes Batista & Eymar Ferrario de Lima
  */
 public class Label extends Entidade{
     private int x;

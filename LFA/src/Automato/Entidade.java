@@ -9,8 +9,8 @@ package Automato;
 import java.awt.Point;
 
 /**
- *
- * @author Matheus Prachedes Batista
+ *  
+ * @author Matheus Prachedes Batista & Eymar Ferrario de Lima
  */
 public abstract class Entidade {
     protected boolean selected;

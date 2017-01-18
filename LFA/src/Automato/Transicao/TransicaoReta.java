@@ -22,7 +22,7 @@ import java.awt.geom.Point2D;
 
 /**
  *
- * @author Matheus Prachedes Batista
+ * @author Matheus Prachedes Batista & Eymar Ferrario de Lima
  */
 public class TransicaoReta extends Transicao {
     private float anguloTransformacao = 0;

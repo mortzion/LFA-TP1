@@ -9,11 +9,18 @@ package Core;
 import java.util.ArrayList;
 
 /**
- *
- * @author Matheus Prachedes Batista
+ *  Classe que representa um estado de um Automato
+ * @author Matheus Prachedes Batista & Eymar Ferrario de Lima
  */
 public class Estado {
+    /**
+     * Boolean que indica se o estado é final
+     */
     private boolean terminal;
+    
+    /**
+     * Vetor de transições que possuem este estado como origem
+     */
     private ArrayList<Transicao> transicoes;
 
     Estado(boolean terminal) {

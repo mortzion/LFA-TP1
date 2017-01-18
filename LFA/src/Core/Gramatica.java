@@ -9,12 +9,23 @@ package Core;
 import java.util.ArrayList;
 
 /**
- *
- * @author Matheus Prachedes Batista
+ *  Classe que representa uma gramatica e verifica se uma cadeia é reconhecida
+ * pela mesma.
+ * Todos os reconhecedores (Automato e Gramatica) implementam a interface
+ * ReceonhecedorCadeia que é usada pela GUI de multiplas entradas.
+ * @author Matheus Prachedes Batista & Eymar Ferrario de Lima
  */
 public class Gramatica implements ReconhecedorCadeia{
+    /**
+     * Vetor que representa os não terminais da gramatica, a não terminal inicialç
+     * é o não terminal que está na primeira posição do vetor
+     */
     private ArrayList<NaoTerminal> naoTerminais;
-    private char naoTerminalInicial;
+    
+    /**
+     * Vetor usado para impedir loops infinitos durante a verificação de uma
+     * cadeia por exemplo o caso: S->A, A->S
+     */
     private ArrayList<Integer> tamanhosAntigos; 
             
     public Gramatica(){
@@ -28,10 +39,7 @@ public class Gramatica implements ReconhecedorCadeia{
         tamanhosAntigos.clear();
     }
     
-    public void setInicial(char inicial){
-        this.naoTerminalInicial = inicial;
-    }
-    
+   
     public void addDerivacao(char naoTerminal, String derivacao){
         int indexNaoTerminal = buscaNaoTerminal(naoTerminal);
         if(indexNaoTerminal == -1){
@@ -60,7 +68,14 @@ public class Gramatica implements ReconhecedorCadeia{
         }
         return -1;
     }
-    
+    /**
+     * Função recursiva que verifica se a gramatica reconhece a string dada
+     * 
+     * @param cadeia Cadeia a ser reconhecida
+     * @param cadeiaAtual Cadeia atual, pode possui um não terminal
+     * @param indexNaoTerminal index da posição do não terminal na cadeiaAtual
+     * @return 
+     */
     private boolean recursao(String cadeia, String cadeiaAtual, int indexNaoTerminal) {
         //Caso a cadeia seja igual, retorna true, cadeia reconhecida
         if(cadeia.equals(cadeiaAtual))return true;
@@ -70,7 +85,7 @@ public class Gramatica implements ReconhecedorCadeia{
         int tamanhoAntigo = tamanhosAntigos.get(naoTerminal);
         NaoTerminal nt =  naoTerminais.get(naoTerminal); 
         //Caso eu esteja voltando para o mesmo não terminal sem aumentar o tamanho da cadeia retorna falso
-        //pois o algoritmo está andando em circulo ex: S -> S (S deriva em S)
+        //pois o algoritmo está andando em circulo ex: S -> A e A -> S 
         if(tamanhoAntigo == cadeiaAtual.length())return false;
         ArrayList<Derivacao> derivacoes = nt.getDerivacoes();
         tamanhosAntigos.set(naoTerminal, cadeiaAtual.length());
@@ -91,26 +106,28 @@ public class Gramatica implements ReconhecedorCadeia{
         tamanhosAntigos.set(naoTerminal, tamanhoAntigo);
         return false;
     }
-
+    
+    /**
+     * Verifica se o inicio e o fim da cadeiaAtual e a cadeia que está sendo testada
+     * são iguais, usando o nãoTerminal como sendo um ponto de separação entre o 
+     * inicio e o fim
+     * 
+     * @param cadeia
+     * @param cadeiaAtual
+     * @param indexNaoTerminal
+     * @return 
+     */
     private boolean verificarIgualdade(String cadeia, String cadeiaAtual, int indexNaoTerminal) {
         String esquerda="",direita="";
         for(int i=0;i<indexNaoTerminal;i++){
             esquerda+=cadeiaAtual.charAt(i);
         }
-        for(int i=cadeiaAtual.length()-1;i>indexNaoTerminal;i--){
+        for(int i=indexNaoTerminal+1;i<cadeiaAtual.length();i++){
             direita+=cadeiaAtual.charAt(i);
         }
         if(!cadeia.startsWith(esquerda))return false;
         if(!cadeia.endsWith(direita))return false;
         return true;
-//        if(cadeia.length() < indexNaoTerminal)return false;
-//        for(int i=0;i<indexNaoTerminal;i++){
-//            if(cadeia.charAt(i) != cadeiaAtual.charAt(i))return false;
-//        }
-//        for(int i=cadeia.length()-1;i>indexNaoTerminal;i--){
-//            if(cadeia.charAt(i) != cadeiaAtual.charAt(i))return false;
-//        }
-//        return true;
     }
 
     @Override

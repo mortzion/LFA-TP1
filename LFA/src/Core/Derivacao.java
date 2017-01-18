@@ -7,11 +7,18 @@
 package Core;
 
 /**
- *
- * @author Matheus Prachedes Batista
+ *  Classe que representa uma regra de derivação
+ * @author Matheus Prachedes Batista & Eymar Ferrario de Lima
  */
 public class Derivacao {
+    /**
+     * String resultada da derivação
+     */
     private String derivacao;
+    
+    /**
+     * Index do não terminal na string de derivação
+     */
     private int indexNaoTerminal;
 
     public Derivacao(String derivacao, int indexNaoTerminal){

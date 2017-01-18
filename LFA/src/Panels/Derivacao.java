@@ -161,14 +161,14 @@ public class Derivacao extends javax.swing.JPanel {
     
     public boolean validar(){
         if(jTextField1.getText().length() != 1 || !Character.isUpperCase(jTextField1.getText().charAt(0)))return false;
-        if(!jTextField1.getText().isEmpty()&& jTextField3.getText().matches("[a-z]*[A-Z]?[a-z]*"))return true;
+        if(!jTextField1.getText().isEmpty()&& jTextField3.getText().matches("([a-z]|[0-9])*[A-Z]?([a-z]|[0-9])*"))return true;
         return false;
     }
     private void test(){
         if(jTextField1.getText().length()!=tamText1 || jTextField3.getText().length()!=tamText2){
             tamText1 = jTextField1.getText().length();
             tamText2 = jTextField3.getText().length();
-            if(this.jTextField3.getText().matches("[a-z]*[A-Z]?[a-z]*") == false)jTextField3.setBackground(Color.red);
+            if(this.jTextField3.getText().matches("([a-z]|[0-9])*[A-Z]?([a-z]|[0-9])*") == false)jTextField3.setBackground(Color.red);
             else jTextField3.setBackground(Color.white);
             
             if(this.jTextField1.getText().matches("[A-Z]?") == false)jTextField1.setBackground(Color.red);

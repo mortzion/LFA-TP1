@@ -25,7 +25,7 @@ import javax.vecmath.Point2f;
 
 /**
  *
- * @author Matheus Prachedes Batista
+ * @author Matheus Prachedes Batista & Eymar Ferrario de Lima
  */
 public class Transicao1 {
     public static final int TIPO_NORMAL = 1;

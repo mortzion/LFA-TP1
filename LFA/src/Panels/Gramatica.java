@@ -52,6 +52,7 @@ public class Gramatica extends javax.swing.JPanel {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -97,6 +98,8 @@ public class Gramatica extends javax.swing.JPanel {
         });
         jToolBar1.add(jButton2);
 
+        jLabel1.setText("* - Para Derivação que resulta em vazio basta deixar a string vazia.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,8 +108,9 @@ public class Gramatica extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -116,7 +120,9 @@ public class Gramatica extends javax.swing.JPanel {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -132,7 +138,8 @@ public class Gramatica extends javax.swing.JPanel {
         }else{
             JOptionPane.showMessageDialog(getParent(), "A gramatica parece estar incorreta.\n"
                     + "É necessario possuir ao menos 1 derivação.\n"
-                    + "As derivações podem ter no maximo 1 não terminal.");
+                    + "As derivações podem ter no maximo 1 não terminal.\n"
+                    + "É necessario possuir ao menos 1 derivação.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -144,7 +151,8 @@ public class Gramatica extends javax.swing.JPanel {
         }else{
             JOptionPane.showMessageDialog(getParent(), "A gramatica parece estar incorreta.\n"
                     + "É necessario possuir ao menos 1 derivação.\n"
-                    + "As derivações podem ter no maximo 1 não terminal.");
+                    + "As derivações podem ter no maximo 1 não terminal.\n"
+                    + "É necessario possuir ao menos 1 derivação.");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -152,6 +160,7 @@ public class Gramatica extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
@@ -188,6 +197,7 @@ public class Gramatica extends javax.swing.JPanel {
 
     private boolean montarGramatica() {
         gramatica.clear();
+        if(derivacoes.size() == 1)return false;
         for(int i=0;i<derivacoes.size()-1;i++){
             Derivacao d = derivacoes.get(i);
             if(d.validar()){

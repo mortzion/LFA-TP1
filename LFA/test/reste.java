@@ -11,7 +11,7 @@ import java.awt.geom.AffineTransform;
 
 /**
  *
- * @author Matheus Prachedes Batista
+ * @author Matheus Prachedes Batista & Eymar Ferrario de Lima
  */
 public class reste {
     public static void main(String[] args){

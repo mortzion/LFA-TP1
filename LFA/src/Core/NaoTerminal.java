@@ -9,11 +9,18 @@ package Core;
 import java.util.ArrayList;
 
 /**
- *
- * @author Matheus Prachedes Batista
+ *  Classe que representa um não terminal de uma gramatica
+ * @author Matheus Prachedes Batista & Eymar Ferrario de Lima
  */
 public class NaoTerminal {
+    /**
+     * Indica qual é o caracter não terminal
+     */
     public char naoTerminal;
+    
+    /**
+     * Vetor que possui todas as derivações deste não terminal
+     */
     public ArrayList<Derivacao> derivacoes;
     
     public NaoTerminal(char naoTerminal){

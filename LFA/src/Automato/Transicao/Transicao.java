@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Matheus Prachedes Batista
+ * @author Matheus Prachedes Batista & Eymar Ferrario de Lima
  */
 public abstract class Transicao {
     public static final int REMOVE_CONDICAO = 1;

@@ -18,7 +18,7 @@ import java.awt.geom.Point2D;
 
 /**
  *
- * @author Matheus Prachedes Batista
+ * @author Matheus Prachedes Batista & Eymar Ferrario de Lima
  */
 public class TransicaoAuto extends Transicao {
     private static int STEP = -17;

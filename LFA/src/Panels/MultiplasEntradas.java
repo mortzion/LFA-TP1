@@ -10,6 +10,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.ScrollPane;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollBar;
 
 /**
  *
@@ -104,11 +106,13 @@ public class MultiplasEntradas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        boolean erro = false;
         for(PanelTextField ptf : entradas){
             if(caseSensitive == true){
                 String cadeia = ptf.getCadeia();
-                for(int i=0;i<cadeia.length();i++){
-                    //Verificar case sensitive
+                if(!cadeia.equals(cadeia.toLowerCase())){
+                    erro = true;
+                    continue;
                 }
             }
             reconhecedor.resetar();
@@ -118,6 +122,7 @@ public class MultiplasEntradas extends javax.swing.JDialog {
                 ptf.setBackgroundTextField(Color.red);
             }
         }
+        if(erro)JOptionPane.showMessageDialog(this, "Não é permitido entrada com um caracter maiusculo");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -132,7 +137,9 @@ public class MultiplasEntradas extends javax.swing.JDialog {
         if(index == entradas.size()-1){
             entradas.add(new PanelTextField(this));
             jPanel1.add(entradas.get(entradas.size()-1));
-            jScrollPane1.revalidate();
+            jScrollPane1.validate();
+            JScrollBar jsb = jScrollPane1.getVerticalScrollBar();
+            jsb.setValue(jsb.getMaximum());
             jScrollPane1.repaint();
         }
     }

@@ -7,12 +7,14 @@
 package Automato;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
 /**
  *
- * @author Matheus Prachedes Batista
+ * @author Matheus Prachedes Batista & Eymar Ferrario de Lima
  */
 public class Estado extends Entidade{
     private int x;
@@ -74,7 +76,9 @@ public class Estado extends Entidade{
         if(selected == false)g.setColor(Color.yellow);
         else g.setColor(Color.blue);
         g.fillOval(x-ray, y-ray, ray*2, ray*2);
-    
+        if(this.label.length()!=0){
+            drawLabel(g);
+        }
         g.setColor(Color.black);
         g.drawChars(nome.toCharArray(), 0, nome.length(), x-6 , y+3);
         
@@ -114,6 +118,15 @@ public class Estado extends Entidade{
     }
 
     
-    
+    public void drawLabel(Graphics g){
+        int largura = 20 + label.length()*10;
+        Font f = g.getFont();
+        g.setFont(new Font(Font.MONOSPACED,Font.PLAIN,f.getSize()+5));
+        g.fillRect(x-largura/2, y-10+ray+5,largura,20);
+        g.setColor(Color.black);
+        g.drawRect(x-largura/2, y-10+ray+5, largura, 20);
+        g.drawString(label,x-largura/2+7, y+10-5+ray+5);
+        g.setFont(f);
+    }
 }
 

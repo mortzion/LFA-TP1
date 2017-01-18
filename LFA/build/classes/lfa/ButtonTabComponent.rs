@@ -1,4 +1,0 @@
-components.ButtonTabComponent$1
-components.ButtonTabComponent$TabButton
-components.ButtonTabComponent$2
-components.ButtonTabComponent

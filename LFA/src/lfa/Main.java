@@ -102,19 +102,19 @@ public class Main extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
     int i = jTabbedPane1.getTabCount();
     jTabbedPane1.add("Automato " + numAutomato,new Automato(this));
-    jTabbedPane1.setTabComponentAt(i, new  components.ButtonTabComponent(jTabbedPane1, "Automato " + numAutomato++));
+    jTabbedPane1.setTabComponentAt(i, new  ButtonTabComponent(jTabbedPane1, "Automato " + numAutomato++));
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         int i = jTabbedPane1.getTabCount();
         jTabbedPane1.add("Gramatica " + numGramatica,new Gramatica(this));
-        jTabbedPane1.setTabComponentAt(i, new  components.ButtonTabComponent(jTabbedPane1, "Gramatica " + numGramatica++));
+        jTabbedPane1.setTabComponentAt(i, new  ButtonTabComponent(jTabbedPane1, "Gramatica " + numGramatica++));
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         int i = jTabbedPane1.getTabCount();
         jTabbedPane1.add("Expressão " + numExpressao,new Expressao());
-        jTabbedPane1.setTabComponentAt(i, new  components.ButtonTabComponent(jTabbedPane1, "Expressão " + numExpressao++));
+        jTabbedPane1.setTabComponentAt(i, new  ButtonTabComponent(jTabbedPane1, "Expressão " + numExpressao++));
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked

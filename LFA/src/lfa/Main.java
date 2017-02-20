@@ -8,6 +8,8 @@ package lfa;
 import Panels.Automato;
 import Panels.Expressao;
 import Panels.Gramatica;
+import Panels.PanelMealy;
+import Panels.PanelMoore;
 import Panels.Sobre;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
@@ -21,6 +23,8 @@ public class Main extends javax.swing.JFrame {
     private int numGramatica = 1;
     private int numExpressao = 1;
     private int numAutomato = 1;
+    private int numMoore = 1;
+    private int numMealy = 1;
     public Main() {
         initComponents();
     }
@@ -38,6 +42,8 @@ public class Main extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -56,6 +62,22 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem1);
+
+        jMenuItem4.setText("Maquina de Moore");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
+
+        jMenuItem5.setText("Maquina de Mealy");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
 
         jMenuItem2.setText("Expressão Regular");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -123,6 +145,26 @@ public class Main extends javax.swing.JFrame {
         sobre.toFront();
     }//GEN-LAST:event_jMenu2MouseClicked
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        int i = jTabbedPane1.getTabCount();
+        jTabbedPane1.add("Moore " + numMoore,new PanelMoore(this));
+        jTabbedPane1.setTabComponentAt(i, new ButtonTabComponent(jTabbedPane1, "Moore " + numMoore++));
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        int i = jTabbedPane1.getTabCount();
+        jTabbedPane1.add("Mealy " + numMealy,new PanelMealy(this));
+        jTabbedPane1.setTabComponentAt(i, new ButtonTabComponent(jTabbedPane1, "Mealy " + numMealy++));
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    public void criarAutomato(Core.AutomatoFinito automato){
+        int i = jTabbedPane1.getTabCount();
+        Automato tab = new Automato(this);
+        jTabbedPane1.add("Automato " + numAutomato,tab);
+        jTabbedPane1.setTabComponentAt(i, new  ButtonTabComponent(jTabbedPane1, "Automato " + numAutomato++));
+        tab.montarAutomato(automato);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -165,6 +207,16 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
+
+    public void criarGramatica(Core.Gramatica gramatica) {
+        Gramatica tab = new Gramatica(this);
+        int i = jTabbedPane1.getTabCount();
+        jTabbedPane1.add("Gramatica " + numGramatica,tab);
+        jTabbedPane1.setTabComponentAt(i, new  ButtonTabComponent(jTabbedPane1, "Gramatica " + numGramatica++));
+        tab.montarGramatica(gramatica);
+    }
 }

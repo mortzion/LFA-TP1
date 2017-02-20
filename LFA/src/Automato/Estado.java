@@ -23,14 +23,33 @@ public class Estado extends Entidade{
     private boolean isfinal = true;
     private boolean isInicial = false;
     public static final int ray = 20;
-    private static int count = 0;
     private String label = "";
+    private String saida = "";
+    
+    public Estado(int x, int y,String nome){
+        init(x,y,"",nome);
+    }
+    
+    public Estado(int x, int y, String saida,String nome){
+        init(x,y,saida,nome);
+    }
+    
+    private void init(int x, int y, String saida,String nome){
+        updatePos(x, y);
+        this.nome = nome;
+        this.isInicial = false;
+        this.isfinal = false;
+        this.saida = saida;
+    }
     
     public String getLabel(){
         return label;
     }
     public boolean isInicial(){
         return isInicial;
+    }
+    public String getSaida(){
+        return saida;
     }
     public void setLabel(String label){
         this.label = label;
@@ -56,13 +75,6 @@ public class Estado extends Entidade{
         return new Point(x,y);
     }
     
-    public Estado(int x, int y){
-        updatePos(x, y);
-        nome = "E" + count;
-        count++;
-        this.isInicial = false;
-        this.isfinal = false;
-    }
     
     public void updatePos(int x,int y){
         this.x = x;
@@ -77,7 +89,10 @@ public class Estado extends Entidade{
         else g.setColor(Color.blue);
         g.fillOval(x-ray, y-ray, ray*2, ray*2);
         if(this.label.length()!=0){
-            drawLabel(g);
+            drawLabel(label,g,x,y);
+        }
+        if(this.saida.length()!=0){
+            drawLabel(saida,g,x+ray,y-ray*2-5);
         }
         g.setColor(Color.black);
         g.drawChars(nome.toCharArray(), 0, nome.length(), x-6 , y+3);
@@ -118,7 +133,7 @@ public class Estado extends Entidade{
     }
 
     
-    public void drawLabel(Graphics g){
+    public void drawLabel(String label,Graphics g,int x, int y){
         int largura = 20 + label.length()*10;
         Font f = g.getFont();
         g.setFont(new Font(Font.MONOSPACED,Font.PLAIN,f.getSize()+5));

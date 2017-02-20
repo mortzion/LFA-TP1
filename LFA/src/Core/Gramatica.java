@@ -27,7 +27,9 @@ public class Gramatica implements ReconhecedorCadeia{
      * cadeia por exemplo o caso: S->A, A->S
      */
     private ArrayList<Integer> tamanhosAntigos; 
-            
+    
+
+    
     public Gramatica(){
         naoTerminais = new ArrayList<NaoTerminal>();
         tamanhosAntigos = new ArrayList<Integer>();
@@ -39,7 +41,10 @@ public class Gramatica implements ReconhecedorCadeia{
         tamanhosAntigos.clear();
     }
     
-   
+    public ArrayList<NaoTerminal> getNaoTerminais(){
+        return naoTerminais;
+    }
+    
     public void addDerivacao(char naoTerminal, String derivacao){
         int indexNaoTerminal = buscaNaoTerminal(naoTerminal);
         if(indexNaoTerminal == -1){
@@ -56,9 +61,16 @@ public class Gramatica implements ReconhecedorCadeia{
         tamanhosAntigos.add(-1);
     }
     
+    public void addNaoTerminal(char naoTerminal) {
+        naoTerminais.add(new NaoTerminal(naoTerminal));
+        tamanhosAntigos.add(-1);
+    }
     
     public boolean verificar(String entrada){
-        return recursao(entrada,String.valueOf(naoTerminais.get(0).getNaoTerminal()),0);
+        if(recursao(entrada,String.valueOf(naoTerminais.get(0).getNaoTerminal()),0)){
+            return true;
+        }
+        return false;
     }
 
     public int buscaNaoTerminal(char naoTerminal){
@@ -136,5 +148,58 @@ public class Gramatica implements ReconhecedorCadeia{
             tamanhosAntigos.set(i, -1);
         }
     }
+
+    public Core.AutomatoFinito converterAF() {
+        Core.AutomatoFinito automato = new AutomatoFinito();
+        for(NaoTerminal nt : naoTerminais){
+            automato.addEstado(false, "");
+        }
+        automato.setInicial(0);
+        automato.addEstado(true, "");
+        
+        for(int i=0;i<naoTerminais.size();i++){
+            NaoTerminal nt = naoTerminais.get(i);
+            for(Derivacao d : nt.getDerivacoes()){
+                
+                //Derivacao não possui não terminal
+                if(d.getIndexNaoTerminal() == -1){
+                    //Derivação não é vazia
+                    if(d.getDerivacao().length() == 1){
+                        automato.addTransicao(i,naoTerminais.size(),d.getDerivacao(),"");
+                    }else{
+                        automato.addTransicao(i, naoTerminais.size(),"λ", "");
+                    }
+                }
+                else{
+                    //Se a derivação possui um terminal
+                    if(d.getDerivacao().length() > 1){
+                        automato.addTransicao(i, indexNaoTerminal(d), d.getDerivacao(),"");
+                    }else{
+                        automato.addTransicao(i, indexNaoTerminal(d),"λ","");
+                    }
+                }
+            }
+        }
+        return automato;
+    }
+
+    private int indexNaoTerminal(Derivacao d) {
+        for(int i=0;i<naoTerminais.size();i++){
+            NaoTerminal nt = naoTerminais.get(i);
+            if(nt.getNaoTerminal() == d.getDerivacao().charAt(d.getIndexNaoTerminal())){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void tornarInicial(int inicial) {
+        NaoTerminal novoInicial = naoTerminais.get(inicial);
+        naoTerminais.set(inicial, naoTerminais.get(0));
+        naoTerminais.set(0, novoInicial);
+    }
+
+   
+
     
 }

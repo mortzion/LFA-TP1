@@ -45,6 +45,7 @@ public class Transicao1 {
     private Estado target;
     private ArrayList<String> condições = new ArrayList<String>();
     private int tipo;
+ 
     
     public Transicao1(Estado source, Estado target, String condição){
         this.source = source;

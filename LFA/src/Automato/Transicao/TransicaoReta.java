@@ -19,6 +19,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import Core.Condicao;
 
 /**
  *
@@ -33,6 +34,11 @@ public class TransicaoReta extends Transicao {
         this.tipo = TIPO_NORMAL;
     }
 
+    public TransicaoReta(Estado source, Estado target, String condicao,String saida){
+        super(source,target,condicao,saida);
+        this.tipo = TIPO_NORMAL;
+    }
+    
     public TransicaoReta(Transicao t){
         super(t);
         this.tipo = TIPO_NORMAL;
@@ -103,7 +109,9 @@ public class TransicaoReta extends Transicao {
         
         Font prefont = g.getFont();
         g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 17));
-        for(String s : condicoes){
+        for(Condicao c : condicoes){
+            String s = c.getCondicao();
+            if(c.getSaida().length() != 0)s = s + " : " + c.getSaida();
             g.drawChars(s.toCharArray(), 0, s.length(), centro.x - s.length()*4, centro.y + STEP*i);
             i++;
         }
@@ -124,7 +132,9 @@ public class TransicaoReta extends Transicao {
         Point2D clique = transform.transform(new Point(x,y),null);
        
         int i = INICIAL;
-        for(String s : condicoes){
+        for(Condicao c : condicoes){
+            String s = c.getCondicao();
+            if(c.getSaida() != "")s = s + " : " + c.getSaida();
             if(clique.getX() > centroX - s.length()*4 && clique.getX() < centroX + s.length()*4){
                 if(clique.getY() < centroY + STEP*i + 10 && clique.getY() > centroY + STEP*i - 10 ){
                     condicoes.remove(s);

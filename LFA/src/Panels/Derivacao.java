@@ -187,4 +187,9 @@ public class Derivacao extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
+
+    public void setDerivacao(char naoTerminal, String derivacao) {
+        jTextField1.setText(String.valueOf(naoTerminal));
+        jTextField3.setText(derivacao);
+    }
 }

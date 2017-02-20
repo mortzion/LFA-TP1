@@ -1,0 +1,5 @@
+projectKey=LFA
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/LFA
+ceTaskId=AVm5K5UJTdC0zIf_KtYe
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVm5K5UJTdC0zIf_KtYe

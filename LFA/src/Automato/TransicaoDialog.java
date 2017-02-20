@@ -125,7 +125,7 @@ public class TransicaoDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        pai.addTransicao(jTextField1.getText());
+        pai.addTransicao(jTextField1.getText(),"");
         this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

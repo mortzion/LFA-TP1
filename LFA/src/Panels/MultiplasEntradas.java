@@ -22,7 +22,9 @@ public class MultiplasEntradas extends javax.swing.JDialog {
     private ArrayList<PanelTextField> entradas;
     private ReconhecedorCadeia reconhecedor;
     private boolean caseSensitive;
-    public MultiplasEntradas(java.awt.Frame parent, boolean modal, ReconhecedorCadeia reconhecedor,boolean caseSensitive) {
+    private boolean possuiSaida;
+
+    public MultiplasEntradas(java.awt.Frame parent, boolean modal, ReconhecedorCadeia reconhecedor,boolean caseSensitive,boolean possuiSaida) {
         super(parent, modal);
         initComponents();
         jPanel1.setLayout(new GridLayout(0,1));
@@ -33,6 +35,7 @@ public class MultiplasEntradas extends javax.swing.JDialog {
         jScrollPane1.repaint();
         this.reconhecedor = reconhecedor;
         this.caseSensitive = caseSensitive;
+        this.possuiSaida = possuiSaida;
     }
 
     
@@ -44,6 +47,8 @@ public class MultiplasEntradas extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Multiplas entradas");
@@ -70,31 +75,46 @@ public class MultiplasEntradas extends javax.swing.JDialog {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 256, Short.MAX_VALUE)
+            .addGap(0, 266, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(jPanel1);
+
+        jLabel1.setText("Entrada");
+
+        jLabel2.setText("Saida");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -116,10 +136,14 @@ public class MultiplasEntradas extends javax.swing.JDialog {
                 }
             }
             reconhecedor.resetar();
-            if(reconhecedor.verificar(ptf.getCadeia())){
-                ptf.setBackgroundTextField(Color.green);
+            if(!possuiSaida){
+                if(reconhecedor.verificar(ptf.getCadeia())){
+                    ptf.setBackgroundTextField(Color.green);
+                }else{
+                    ptf.setBackgroundTextField(Color.red);
+                }
             }else{
-                ptf.setBackgroundTextField(Color.red);
+                ptf.setSaida(((Core.AutomatoFinito)reconhecedor).getSaida());
             }
         }
         if(erro)JOptionPane.showMessageDialog(this, "Não é permitido entrada com um caracter maiusculo");
@@ -147,6 +171,8 @@ public class MultiplasEntradas extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

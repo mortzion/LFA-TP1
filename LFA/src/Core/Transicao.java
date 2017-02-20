@@ -15,25 +15,40 @@ public class Transicao {
      * Caracter que deve ser lido para ocorrer a transição
      * Caso a transição seja vazia, a variavel será nula
      */
-    private Character caracter;
-    
+    private String caracter;
+    private String saida;
     /**
      * index do estado destino
      */
     private int estadoDestino;
     
     public Transicao(Character caracter, int estadoDestino){
-        this.caracter = caracter;
+        this.caracter = caracter==null?"":caracter.toString();
         this.estadoDestino = estadoDestino;
     }
     
+    public Transicao(Character caracter, int estadoDestino, String saida){
+        this.caracter = caracter==null?"":caracter.toString();;
+        this.estadoDestino = estadoDestino;
+        this.saida = saida;
+    }
+
+    public Transicao(String transicao, int estadoDestino) {
+        this.estadoDestino = estadoDestino;
+        this.caracter = transicao;
+    }
+    
     public Character getCaracter(){
-        return caracter;
+        return caracter.length()==0?null:caracter.charAt(0);
     }
     public int getEstadoDestino(){
         return estadoDestino;
     }
-
+    public String getSaida(){
+        return saida;
+    }
+    
+    
     /**
      * Verifica se é possivel seguir por essa transição dado a cadeia que está
      * sendo reconhecida e a posição que está sendo lida da cadeia
@@ -43,10 +58,10 @@ public class Transicao {
      * @return boolean indicando se é valido seguir por essa transição
      */
     public boolean valida(int posLeitura, String entrada) {
-        if(caracter == null){
+        if(getCaracter() == null){
             if(posLeitura <= entrada.length())return true;
         }else{
-            if(posLeitura<entrada.length() && entrada.charAt(posLeitura) == caracter)return true;
+            if(posLeitura<entrada.length() && entrada.charAt(posLeitura) == getCaracter())return true;
         }
         return false;
     }
@@ -59,7 +74,22 @@ public class Transicao {
      * @return 
      */
     public int incremento() {
-        if(caracter == null)return 0;
+        if(caracter.length()==0)return 0;
         return 1;
     }
+    
+    public String getTransicao(){
+        if(caracter.contains("|"))return "("+caracter+")";
+        return caracter;
+    }
+    
+    public String concat(String trans) {
+        return trans + "|" + (getTransicao().length()==0?"λ":caracter);
+    }
+
+    public void setTransicao(String transicao) {
+        this.caracter = transicao;
+    }
+    
+    
 }

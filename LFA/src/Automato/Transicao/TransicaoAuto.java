@@ -15,6 +15,7 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import Core.Condicao;
 
 /**
  *
@@ -26,6 +27,10 @@ public class TransicaoAuto extends Transicao {
     
     public TransicaoAuto(Estado source, Estado target, String condicao){
         super(source,target,condicao);
+        this.tipo = TIPO_AUTO;
+    }
+    public TransicaoAuto(Estado source, Estado target, String condicao,String saida){
+        super(source,target,condicao,saida);
         this.tipo = TIPO_AUTO;
     }
     
@@ -47,7 +52,9 @@ public class TransicaoAuto extends Transicao {
         
         
         int i = INICIAL;
-        for(String s : condicoes){
+        for(Condicao c : condicoes){
+            String s = c.getCondicao();
+            if(c.getSaida() != "")s = s + " : " + c.getSaida();
             if(x > centroX - s.length()*4 && x < centroX + s.length()*4){
                 if(y < centroY + STEP*i + 10 && y > centroY + STEP*i - 10 ){
                     condicoes.remove(s);
@@ -74,7 +81,9 @@ public class TransicaoAuto extends Transicao {
         int i = INICIAL;
         Font f = g.getFont();
         g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 17));
-        for(String s : condicoes){
+        for(Condicao c : condicoes){
+            String s = c.getCondicao();
+            if(c.getSaida().length() != 0)s = s + " : " + c.getSaida();
             g.drawChars(s.toCharArray(), 0, s.length(), centro.x - s.length()*4, centro.y + STEP*i);
             i++;
         }

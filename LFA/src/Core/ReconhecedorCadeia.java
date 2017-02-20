@@ -13,6 +13,7 @@ package Core;
  * @author Matheus Prachedes Batista & Eymar Ferrario de Lima
  */
 public interface ReconhecedorCadeia{
+    
     /**
      * Método usado para verificar se uma cadeia é aceita pelo reconhecedor
      * @param cadeia cadeia a ser verificada
@@ -25,4 +26,5 @@ public interface ReconhecedorCadeia{
      * conflitos com calculos futuros
      */
     public abstract void resetar();
+
 }

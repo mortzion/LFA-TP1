@@ -23,6 +23,7 @@ import java.awt.geom.Point2D;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import javax.vecmath.Point2f;
+import Core.Condicao;
 
 /**
  *
@@ -35,6 +36,11 @@ public class TransicaoArco extends Transicao{
 
     public TransicaoArco(Estado source, Estado target, String condicao,int tipo) {
         super(source, target, condicao);
+        this.tipo = tipo;
+    }
+    
+    public TransicaoArco(Estado source, Estado target, String condicao,int tipo,String saida) {
+        super(source, target, condicao,saida);
         this.tipo = tipo;
     }
 
@@ -108,7 +114,8 @@ public class TransicaoArco extends Transicao{
                 break;
         }
         
-        for(String s : condicoes){
+        for(Condicao c : condicoes){
+            String s = c.getCondicao() + " : " + c.getSaida();
             if(clique.getX() > centroX - s.length()*4 && clique.getX() < centroX + s.length()*4){
                 if(clique.getY() < centroY + step*i + 10 && clique.getY() > centroY + step*i - 10 ){
                     condicoes.remove(s);
@@ -162,7 +169,9 @@ public class TransicaoArco extends Transicao{
                 break;
         }
         
-        for(String s : condicoes){
+        for(Condicao c : condicoes){
+            String s = c.getCondicao();
+            if(c.getSaida().length() != 0)s = s + " : " + c.getSaida();
             g.drawChars(s.toCharArray(), 0, s.length(), centro.x - s.length()*4, centro.y + step*i);
             i++;
         }

@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+import Core.Condicao;
 
 /**
  *
@@ -32,14 +33,21 @@ public abstract class Transicao {
     
     protected Estado source;
     protected Estado target;
-    protected ArrayList<String> condicoes;
+    protected ArrayList<Condicao> condicoes;
     protected int tipo;
     
     public Transicao(Estado source ,Estado target,String condicao){
         this.source = source;
         this.target = target;
         condicoes = new ArrayList<>();
-        condicoes.add(condicao);
+        this.addCondicao(condicao, "");
+    }
+    
+    public Transicao(Estado source, Estado target, String condicao, String saida){
+        this.source = source;
+        this.target = target;
+        condicoes = new ArrayList<>();
+        this.addCondicao(condicao, saida);
     }
     
     public Transicao(Transicao t, int tipo){
@@ -55,7 +63,7 @@ public abstract class Transicao {
         this.condicoes = t.condicoes;
     }
     
-    public ArrayList<String> getCondicoes(){
+    public ArrayList<Condicao> getCondicoes(){
         return condicoes;
     }
     
@@ -78,9 +86,16 @@ public abstract class Transicao {
     }
     
     public void addCondicao(String condicao){
-        if(!condicoes.contains(condicao))condicoes.add(condicao);
+        addCondicao(condicao,"");
+        //if(!condicoes.contains(condicao))condicoes.add(condicao);
     }
     
+    public void addCondicao(String condicao, String saida){
+        for(Condicao c : condicoes){
+            if(c.getCondicao().equals(condicao))return;
+        }
+        condicoes.add(new Condicao(condicao,saida));
+    }
     public abstract void draw(Graphics2D g);
      
     public int getTipo(){
@@ -97,6 +112,7 @@ public abstract class Transicao {
     
     protected abstract boolean colideComCond(int x,int y);
     protected abstract int colideComTransicao(int x,int y);
+    
     protected abstract void drawString(Point centro, AffineTransform transform, Graphics2D g);
     public int colide(int x,int y){
         if(colideComCond(x, y)){

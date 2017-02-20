@@ -5,31 +5,16 @@
  */
 package Panels;
 
-import Automato.Entidade;
 import Automato.Estado;
 import Automato.Label;
 import Automato.LabelDialog;
-import Automato.Transicao.Transicao;
-import Automato.Transicao.TransicaoArco;
-import Automato.Transicao.TransicaoAuto;
-import Automato.Transicao.TransicaoReta;
-import Automato.Transicao1;
 import Automato.TransicaoDialog;
 import Core.AutomatoFinito;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Queue;
-import java.util.Stack;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import lfa.Main;
 
 /**
  *
@@ -38,19 +23,23 @@ import javax.swing.JScrollPane;
 public class Automato extends javax.swing.JPanel {
 
     
-    private ViewPanel view;
+    protected ViewPanel view;
     private int x,y;
-    private AutomatoFinito automato = new AutomatoFinito();
-    private JFrame pai;
-    public Automato(JFrame pai) {
+    protected Main pai;
+    protected boolean needFinal;
+    protected int cont = 0;
+    public Automato(Main pai) {
         initComponents();
         this.pai = pai;
+        needFinal = true;
         bttnGroupMenu.add(bttnPointer);
         bttnGroupMenu.add(bttnCreateAutomato);
         bttnGroupMenu.add(bttnCreateTransicao);
         bttnGroupMenu.add(bttnApagar);
         this.bttnPointer.setSelected(true);
         view = (ViewPanel)this.jPanel1;
+        
+        
         
         //scrollPaneImage.add(view);
     }
@@ -85,6 +74,8 @@ public class Automato extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         menuEstado.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
             public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
@@ -288,6 +279,29 @@ public class Automato extends javax.swing.JPanel {
         });
         jToolBar2.add(jButton3);
 
+        jButton4.setText("Converter para GR");
+        jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton4.setFocusable(false);
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(jButton4);
+
+        jButton5.setText("jButton5");
+        jButton5.setFocusable(false);
+        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(jButton5);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -308,7 +322,7 @@ public class Automato extends javax.swing.JPanel {
                 .addGap(4, 4, 4)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPaneImage, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                .addComponent(scrollPaneImage, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -373,10 +387,10 @@ public class Automato extends javax.swing.JPanel {
                 //}
             }
             if(bttnCreateAutomato.isSelected() == true){
-                view.entidadeSelecionada = new Estado(evt.getX(),evt.getY());
-                view.entidadeSelecionada.setSelecionado(true);
-                view.estados.add((Estado)view.entidadeSelecionada);
-       
+                view.entidadeSelecionada = criarEstado(evt.getX(), evt.getY());
+                if(view.entidadeSelecionada != null){
+                    view.estados.add((Estado)view.entidadeSelecionada);
+                }
             }
         }else{
 
@@ -397,7 +411,7 @@ public class Automato extends javax.swing.JPanel {
                     t = view.getEstadoColidido(view.transTarget.x, view.transTarget.y);
 
                     if(s != null && t != null){
-                        new TransicaoDialog(this,false,evt.getPoint());
+                        criarTransicao(evt.getPoint());
                     }
                     view.creatingTrans = false;
                 }
@@ -469,30 +483,30 @@ public class Automato extends javax.swing.JPanel {
     
     
     private void scrollPaneImageMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scrollPaneImageMousePressed
-        if(evt.getButton() == 1){
-            if(bttnCreateTransicao.isSelected()){
-                if(view.getEstadoColidido(evt.getX(), evt.getY()) != null){
-                    view.creatingTrans = true;
-                    view.transSource.setLocation(evt.getPoint());
-                    view.transTarget.setLocation(view.transSource);
-                }
-            }
-            if(bttnPointer.isSelected() == true){
-                view.estadoSelecionado = view.getEstadoColidido(evt.getX(), evt.getY());
-                if(view.estadoSelecionado != null){
-                    view.estadoSelecionado.setSelecionado(true);
-                }
-            }
-            if(bttnCreateAutomato.isSelected() == true){
-                view.estadoSelecionado = new Estado(evt.getX(),evt.getY());
-                view.estadoSelecionado.setSelecionado(true);
-                view.estados.add(view.estadoSelecionado);
-
-            }
-        }else{
-
-        }
-        repintar();
+//        if(evt.getButton() == 1){
+//            if(bttnCreateTransicao.isSelected()){
+//                if(view.getEstadoColidido(evt.getX(), evt.getY()) != null){
+//                    view.creatingTrans = true;
+//                    view.transSource.setLocation(evt.getPoint());
+//                    view.transTarget.setLocation(view.transSource);
+//                }
+//            }
+//            if(bttnPointer.isSelected() == true){
+//                view.estadoSelecionado = view.getEstadoColidido(evt.getX(), evt.getY());
+//                if(view.estadoSelecionado != null){
+//                    view.estadoSelecionado.setSelecionado(true);
+//                }
+//            }
+//            if(bttnCreateAutomato.isSelected() == true){
+//                view.estadoSelecionado = new Estado(evt.getX(),evt.getY());
+//                view.estadoSelecionado.setSelecionado(true);
+//                view.estados.add(view.estadoSelecionado);
+//
+//            }
+//        }else{
+//
+//        }
+//        repintar();
 
     }//GEN-LAST:event_scrollPaneImageMousePressed
 
@@ -578,7 +592,89 @@ public class Automato extends javax.swing.JPanel {
     }//GEN-LAST:event_itemMenuEditarLabelActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(view.verificaEstados()){
+        testeRapido();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        testeEstadoPorEstado();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        testeMultiplos();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        converterGR();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        converterER();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton bttnApagar;
+    private javax.swing.JToggleButton bttnCreateAutomato;
+    private javax.swing.JToggleButton bttnCreateTransicao;
+    private javax.swing.ButtonGroup bttnGroupMenu;
+    private javax.swing.JToggleButton bttnPointer;
+    private javax.swing.JMenuItem itemMenuCriarLabel;
+    private javax.swing.JMenuItem itemMenuEditarLabel;
+    private javax.swing.JMenuItem itemMenuFinal;
+    private javax.swing.JMenuItem itemMenuInicial;
+    private javax.swing.JMenuItem itemMenuRemoverEstado;
+    private javax.swing.JMenuItem itenMenuAddLabel;
+    private javax.swing.JButton jButton1;
+    public javax.swing.JButton jButton2;
+    protected javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
+    protected javax.swing.JPopupMenu menuEstado;
+    private javax.swing.JPopupMenu menuLabel;
+    private javax.swing.JPopupMenu menuSolto;
+    private javax.swing.JScrollPane scrollPaneImage;
+    // End of variables declaration//GEN-END:variables
+
+    public void addTransicao(String cond,String saida){
+        if(cond.length() > 0){
+            Estado s = view.getEstadoColidido(view.transSource.x,view.transSource.y);
+            Estado t = view.getEstadoColidido(view.transTarget.x, view.transTarget.y);
+            
+            view.addTrans(s,t, cond,saida);
+            repintar();
+            
+        }
+    }
+
+    public void editarLabel(String text) {
+        if(text == null)view.entidadeSelecionada = null;
+        else{
+            if(view.entidadeSelecionada != null){
+                ((Label)view.entidadeSelecionada).setLabel(text);
+            }else{
+                view.labels.add(new Label(this.x,this.y,text));
+            }
+        }
+        repintar();
+    }
+
+    protected Estado criarEstado(int x,int y) {
+        Estado s = new Estado(x,y,"E" + cont++); 
+        s.setSelecionado(true);
+        return s;
+        
+    }
+
+    protected void criarTransicao(Point point) {
+        new TransicaoDialog(this,false,point);
+    }
+
+    protected void testeRapido(){
+        AutomatoFinito automato = new AutomatoFinito();
+        if(view.verificaEstados(needFinal)){
             view.montarAutomato(automato);
             String cadeia = JOptionPane.showInputDialog(getParent(),"Insira a cadeia que irá ser reconhecida");
             if(cadeia == null)return;
@@ -592,10 +688,24 @@ public class Automato extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this.getParent(),"O autômato parece não estar completo.\n"
                     + "É necessário pelo menos 1 estado final e exatamente 1 estado inicial.");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(view.verificaEstados()){
+    }
+    
+    protected void testeMultiplos(){
+        AutomatoFinito automato = new AutomatoFinito();
+        if(view.verificaEstados(needFinal)){
+            view.montarAutomato(automato);
+            MultiplasEntradas me = new MultiplasEntradas(pai, true, automato,false,false);
+            me.setVisible(true);
+            me.toFront();
+        }else{
+            JOptionPane.showMessageDialog(this.getParent(),"O autômato parece não estar completo.\n"
+                    + "É necessario pelo menos 1 estado final e exatamente 1 estado inicial.");
+        }
+    }
+    
+    protected void testeEstadoPorEstado(){
+        AutomatoFinito automato = new AutomatoFinito();
+        if(view.verificaEstados(needFinal)){
             view.montarAutomato(automato);
             String cadeia = JOptionPane.showInputDialog(getParent(),"Insira a cadeia que irá ser reconhecida");
             if(cadeia == null)return;
@@ -612,65 +722,34 @@ public class Automato extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this.getParent(),"O autômato parece não estar completo.\n"
                     + "É necessario pelo menos 1 estado final e exatamente 1 estado inicial.");
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if(view.verificaEstados()){
+   
+    public void montarAutomato(AutomatoFinito automato) {
+        view.desenharAutomato(automato);
+        cont = view.estados.size();
+    }
+
+    protected void converterGR() {
+        AutomatoFinito automato = new AutomatoFinito();
+        if(view.verificaEstados(needFinal)){
             view.montarAutomato(automato);
-            MultiplasEntradas me = new MultiplasEntradas(pai, true, automato,false);
-            me.setVisible(true);
-            me.toFront();
+            Core.Gramatica gramatica = automato.converterGR();
+            pai.criarGramatica(gramatica);
         }else{
             JOptionPane.showMessageDialog(this.getParent(),"O autômato parece não estar completo.\n"
                     + "É necessario pelo menos 1 estado final e exatamente 1 estado inicial.");
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton bttnApagar;
-    private javax.swing.JToggleButton bttnCreateAutomato;
-    private javax.swing.JToggleButton bttnCreateTransicao;
-    private javax.swing.ButtonGroup bttnGroupMenu;
-    private javax.swing.JToggleButton bttnPointer;
-    private javax.swing.JMenuItem itemMenuCriarLabel;
-    private javax.swing.JMenuItem itemMenuEditarLabel;
-    private javax.swing.JMenuItem itemMenuFinal;
-    private javax.swing.JMenuItem itemMenuInicial;
-    private javax.swing.JMenuItem itemMenuRemoverEstado;
-    private javax.swing.JMenuItem itenMenuAddLabel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JToolBar jToolBar2;
-    private javax.swing.JPopupMenu menuEstado;
-    private javax.swing.JPopupMenu menuLabel;
-    private javax.swing.JPopupMenu menuSolto;
-    private javax.swing.JScrollPane scrollPaneImage;
-    // End of variables declaration//GEN-END:variables
-
-    public void addTransicao(String cond){
-        if(cond.length() > 0){
-            Estado s = view.getEstadoColidido(view.transSource.x,view.transSource.y);
-            Estado t = view.getEstadoColidido(view.transTarget.x, view.transTarget.y);
-            
-            view.addTrans(s,t, cond);
-            repintar();
-            
-        }
     }
 
-    public void editarLabel(String text) {
-        if(text == null)view.entidadeSelecionada = null;
-        else{
-            if(view.entidadeSelecionada != null){
-                ((Label)view.entidadeSelecionada).setLabel(text);
-            }else{
-                view.labels.add(new Label(this.x,this.y,text));
-            }
+    protected void converterER() {
+        AutomatoFinito automato = new AutomatoFinito();
+        if(view.verificaEstados(needFinal)){
+            view.montarAutomato(automato);
+            System.out.println(automato.converterRegex());
+        }else{
+            JOptionPane.showMessageDialog(this.getParent(),"O autômato parece não estar completo.\n"
+                    + "É necessario pelo menos 1 estado final e exatamente 1 estado inicial.");
         }
-        repintar();
     }
 }

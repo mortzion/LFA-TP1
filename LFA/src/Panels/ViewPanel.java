@@ -21,6 +21,7 @@ import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.JPanel;
@@ -106,22 +107,22 @@ public class ViewPanel extends JPanel {
             }
         }
 
-        public void addTrans(Estado source, Estado target, String parametro){
+        public void addTrans(Estado source, Estado target, String parametro,String saida){
             for(int i=trans.size()-1;i>=0;i--){
                 Transicao t = trans.get(i);
                 if(t.sameSourceTarget(source,target)){
-                    t.addCondicao(parametro);
+                    t.addCondicao(parametro,saida);
                     return;
                 }
                 if(t.opositeSourceTarget(source,target) && t.getTipo() == Transicao.TIPO_NORMAL){
                     trans.set(i, new TransicaoArco(t,Transicao.TIPO_CIMA));
-                    trans.add(new TransicaoArco(source,target,parametro,Transicao.TIPO_BAIXO));
+                    trans.add(new TransicaoArco(source,target,parametro,Transicao.TIPO_BAIXO,saida));
                     return;
                 }
                
             }
-            if(source != target)trans.add(new TransicaoReta(source,target,parametro));
-            else trans.add(new TransicaoAuto(source,target,parametro));
+            if(source != target)trans.add(new TransicaoReta(source,target,parametro,saida));
+            else trans.add(new TransicaoAuto(source,target,parametro,saida));
         }
         
         public void removerEntidade(int x, int y){
@@ -229,7 +230,7 @@ public class ViewPanel extends JPanel {
             return null;
         }
 
-        public boolean verificaEstados() {
+        public boolean verificaEstados(boolean needFinal) {
             boolean hasFinal,hasInicial;
             hasFinal = hasInicial = false;
             for(Estado e : estados){
@@ -241,6 +242,7 @@ public class ViewPanel extends JPanel {
                     hasInicial = true;
                 }
             }
+            if(needFinal == false)hasFinal = true;
             if(hasInicial == true && hasFinal == true)return true;
             return false;
         }
@@ -249,7 +251,7 @@ public class ViewPanel extends JPanel {
             automato.clear();
             ArrayList<Transicao> copia = (ArrayList<Transicao>) trans.clone();
             for(Estado e :estados){
-                automato.addEstado(e.isFinal());
+                automato.addEstado(e.isFinal(),e.getSaida());
             }
             for(int i=0;i<estados.size();i++){
                 Estado e = estados.get(i);
@@ -265,4 +267,28 @@ public class ViewPanel extends JPanel {
             }
             
         }
+
+    public void desenharAutomato(AutomatoFinito automato) {
+        ArrayList<Core.Estado> estadosAutomato = automato.getEstados();
+        double stepAngulo = 360/estadosAutomato.size();
+        Point p = new Point(0,-100);
+        AffineTransform transform = new AffineTransform();
+        transform.rotate(Math.toRadians(stepAngulo));
+        int cont = 0;
+        for(Core.Estado e : estadosAutomato){
+            Estado novoEstado =new Estado(p.x+300,p.y+300,"E" + cont++);
+            if(e.isFinal())novoEstado.setFinal(true);
+            estados.add(novoEstado);
+            transform.transform(p, p);
+        }
+        estados.get(0).setInicial(true);
+        for(int i=0;i<estadosAutomato.size();i++){
+            Core.Estado e = estadosAutomato.get(i);
+            for(Core.Transicao t : e.getTransicoes()){
+                String condicao = t.getCaracter()==null?"λ":t.getCaracter().toString();
+                addTrans(estados.get(i),estados.get(t.getEstadoDestino()),condicao,"");
+            }
+        }
+        this.repaint();
     }
+}

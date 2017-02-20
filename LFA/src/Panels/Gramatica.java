@@ -5,12 +5,14 @@
  */
 package Panels;
 
+import Core.NaoTerminal;
 import com.sun.j3d.utils.scenegraph.io.retained.J3fInputStream;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import lfa.Main;
 
 /**
  *
@@ -20,8 +22,8 @@ public class Gramatica extends javax.swing.JPanel {
     private int gridSize;
     private ArrayList<Derivacao> derivacoes;
     private Core.Gramatica gramatica;
-    private JFrame pai;
-    public Gramatica(JFrame pai) {
+    private Main pai;
+    public Gramatica(Main pai) {
         this.setMaximumSize(this.getPreferredSize());
         initComponents();
         this.pai = pai;
@@ -52,6 +54,7 @@ public class Gramatica extends javax.swing.JPanel {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -97,6 +100,18 @@ public class Gramatica extends javax.swing.JPanel {
             }
         });
         jToolBar1.add(jButton2);
+
+        jButton3.setText("Converter para AF");
+        jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton3);
 
         jLabel1.setText("* - Para Derivação que resulta em vazio basta deixar a string vazia.");
 
@@ -145,7 +160,7 @@ public class Gramatica extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if(montarGramatica()){
-            MultiplasEntradas me = new MultiplasEntradas(pai, true, gramatica,true);
+            MultiplasEntradas me = new MultiplasEntradas(pai, true, gramatica,true,false);
             me.setVisible(true);
             me.toFront();
         }else{
@@ -156,10 +171,15 @@ public class Gramatica extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        ConverterGR();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -205,5 +225,40 @@ public class Gramatica extends javax.swing.JPanel {
             }else return false;         
         }
         return true;
+    }
+
+    private void ConverterGR() {
+        if(!montarGramatica()){
+            JOptionPane.showMessageDialog(getParent(), "A gramatica parece estar incorreta.\n"
+                    + "É necessario possuir ao menos 1 derivação.\n"
+                    + "As derivações podem ter no maximo 1 não terminal.\n"
+                    + "É necessario possuir ao menos 1 derivação.");
+            
+        }else{
+            Core.AutomatoFinito automato = gramatica.converterAF();
+            pai.criarAutomato(automato);
+        }
+    }
+
+    public void montarGramatica(Core.Gramatica gramatica) {
+        if(gramatica.getNaoTerminais().size()>8){
+            gridSize = gramatica.getNaoTerminais().size();
+            ((GridLayout)jPanel1.getLayout()).setRows(gridSize);
+        }
+        for(NaoTerminal nt :gramatica.getNaoTerminais()){
+            for(Core.Derivacao d : nt.getDerivacoes()){
+                Derivacao deriva = new Derivacao(this);
+                deriva.setDerivacao(nt.getNaoTerminal(),d.getDerivacao());
+                derivacoes.add(deriva);
+                jPanel1.add(deriva);
+                
+            }
+        }
+        jPanel1.remove(derivacoes.get(0));
+        derivacoes.remove(0);
+        criarDerivacao(derivacoes.get(derivacoes.size()-1));
+        jScrollPane1.getVerticalScrollBar().setValue(jScrollPane1.getVerticalScrollBar().getMaximum()+50);
+        jScrollPane1.revalidate();
+        jScrollPane1.repaint();
     }
 }

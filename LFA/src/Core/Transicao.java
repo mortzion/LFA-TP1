@@ -20,20 +20,20 @@ public class Transicao {
     /**
      * index do estado destino
      */
-    private int estadoDestino;
+    private Estado estadoDestino;
     
-    public Transicao(Character caracter, int estadoDestino){
+    public Transicao(Character caracter, Estado estadoDestino){
         this.caracter = caracter==null?"":caracter.toString();
         this.estadoDestino = estadoDestino;
     }
     
-    public Transicao(Character caracter, int estadoDestino, String saida){
+    public Transicao(Character caracter, Estado estadoDestino, String saida){
         this.caracter = caracter==null?"":caracter.toString();;
         this.estadoDestino = estadoDestino;
         this.saida = saida;
     }
 
-    public Transicao(String transicao, int estadoDestino) {
+    public Transicao(String transicao, Estado estadoDestino) {
         this.estadoDestino = estadoDestino;
         this.caracter = transicao;
     }
@@ -41,14 +41,16 @@ public class Transicao {
     public Character getCaracter(){
         return caracter.length()==0?null:caracter.charAt(0);
     }
-    public int getEstadoDestino(){
+    public Estado getEstadoDestino(){
         return estadoDestino;
     }
     public String getSaida(){
         return saida;
     }
     
-    
+    public void setEstadoDestino(Estado destino){
+        this.estadoDestino = destino;
+    }
     /**
      * Verifica se é possivel seguir por essa transição dado a cadeia que está
      * sendo reconhecida e a posição que está sendo lida da cadeia

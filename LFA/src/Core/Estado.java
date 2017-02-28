@@ -17,7 +17,15 @@ public class Estado {
      * Boolean que indica se o estado é final
      */
     private boolean terminal;
-    
+    private int caminhoVazio = -1;
+
+    public int getCaminhoVazio() {
+        return caminhoVazio;
+    }
+
+    public void setCaminhoVazio(int caminhoVazio) {
+        this.caminhoVazio = caminhoVazio;
+    }
     /**
      * Vetor de transições que possuem este estado como origem
      */
@@ -44,7 +52,7 @@ public class Estado {
         return transicoes;
     } 
 
-    public void addTransicao(int estadoDestino, Character condicao,String saida){
+    public void addTransicao(Estado estadoDestino, Character condicao,String saida){
         transicoes.add(new Transicao(condicao,estadoDestino,saida));
     }
     
@@ -83,9 +91,9 @@ public class Estado {
         //}
     }
 
-    public String getAutoTrans(int i) {
+    public String getAutoTrans() {
         for(Transicao t : transicoes){
-            if(t.getEstadoDestino() == i){
+            if(t.getEstadoDestino() == this){
                 String retorno = t.getTransicao();
                 if(retorno.length()==0)return "";
                 if(retorno.length()==1)return retorno+"*";
@@ -95,7 +103,7 @@ public class Estado {
         return "";
     }
 
-    public void addExpressao(int estadoDestino, String novaTransicao) {
+    public void addExpressao(Estado estadoDestino, String novaTransicao) {
         for(Transicao t : transicoes){
             if(t.getEstadoDestino() == estadoDestino){
                 String transicao = t.getTransicao();

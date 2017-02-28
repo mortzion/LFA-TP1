@@ -14,13 +14,12 @@ public class MaquinaMealy extends Core.AutomatoFinito{
 
     
     @Override
-    protected boolean proximoEstado(int estadoAtual, String entrada, int posLeitura) {
-        Estado e = estados.get(estadoAtual);
+    protected boolean proximoEstado(Estado estadoAtual, String entrada, int posLeitura) {
         char charLido;
         if(posLeitura == entrada.length())return true;
         charLido = entrada.charAt(posLeitura);
         
-        for(Transicao t : e.getTransicoes()){
+        for(Transicao t : estadoAtual.getTransicoes()){
             if(t.getCaracter() == charLido){
                 saida = saida + t.getSaida();
                 return proximoEstado(t.getEstadoDestino(),entrada,posLeitura+t.incremento());

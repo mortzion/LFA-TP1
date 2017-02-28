@@ -28,12 +28,11 @@ public class AutomatoFinito implements ReconhecedorCadeia{
      * Vetor usado para impedir loops infinitos durante a verificação de uma
      * cadeia
      */
-    protected ArrayList<Integer> caminhoVazio;
     
     /**
      * index do Estado inicial
      */
-    protected int inicial;
+    protected Estado inicial;
     
     /**
      * Vetor usado para recuperar o caminho seguido pelo automato para reconhecer
@@ -52,14 +51,24 @@ public class AutomatoFinito implements ReconhecedorCadeia{
     public AutomatoFinito(){
         saida = "";
         estados = new ArrayList<>();
-        caminho = new ArrayList<>();
-        caminhoVazio = new ArrayList<>();   
+        caminho = new ArrayList<>();  
         charLidos = new ArrayList<>();    
+    }
+
+    public AutomatoFinito(Estado e) {
+        saida = "";
+        estados = new ArrayList<>();
+        caminho = new ArrayList<>();  
+        charLidos = new ArrayList<>();  
+        estados.add(e);
+        inicial = e;
     }
     
     public void clear(){
         estados.clear();
-        caminhoVazio.clear();
+        for(Estado e : estados){
+            e.setCaminhoVazio(-1);
+        }
     }
     
     /**
@@ -69,7 +78,6 @@ public class AutomatoFinito implements ReconhecedorCadeia{
      */
     public void addEstado(boolean terminal,String saida){
         estados.add(new Estado(terminal,saida));
-        caminhoVazio.add(new Integer(-1));
     }
     
     /**
@@ -79,6 +87,10 @@ public class AutomatoFinito implements ReconhecedorCadeia{
      */
     public void setFinal(int idEstado){
         estados.get(idEstado).setFinal();
+    }
+    
+    public void addEstado(Estado e){
+        this.estados.add(e);
     }
     
     /**
@@ -105,9 +117,9 @@ public class AutomatoFinito implements ReconhecedorCadeia{
     public void addTransicao(int estado, int estadoDestino, String condicao, String saida){
         Estado e = estados.get(estado);
         if(condicao.startsWith("λ")){
-            e.addTransicao(estadoDestino, null, saida);
+            e.addTransicao(estados.get(estadoDestino), null, saida);
         }else{
-            e.addTransicao(estadoDestino, condicao.charAt(0), saida);
+            e.addTransicao(estados.get(estadoDestino), condicao.charAt(0), saida);
         }
         
     }
@@ -118,6 +130,10 @@ public class AutomatoFinito implements ReconhecedorCadeia{
      * @param inicial index do estado inicial 
      */
     public void setInicial(int inicial){
+        this.inicial = estados.get(inicial);
+    }
+    
+    public void setInicial(Estado inicial){
         this.inicial = inicial;
     }
     
@@ -128,10 +144,10 @@ public class AutomatoFinito implements ReconhecedorCadeia{
      * @return boolean indicando se aceitou ou não a cadeia 
      */
     public boolean verificar(String entrada){
-        int estadoAtual = inicial;
+        Estado estadoAtual = inicial;
         caminho.clear();
         charLidos.clear();
-        caminho.add(estadoAtual);
+        caminho.add(estados.indexOf(estadoAtual));
         if(proximoEstado(estadoAtual, entrada, 0)){
             return true;
         }
@@ -154,20 +170,19 @@ public class AutomatoFinito implements ReconhecedorCadeia{
      * @param posLeitura posição de leitura na cadeia
      * @return boolean indicando se o estado atual validou a entrada
      */
-    protected boolean proximoEstado(int estadoAtual, String entrada, int posLeitura){
+    protected boolean proximoEstado(Estado estadoAtual, String entrada, int posLeitura){
         int caminhoAntigo;
-        Estado e = estados.get(estadoAtual);
-        if(e.isFinal() == true && entrada.length() == posLeitura){
+        if(estadoAtual.isFinal() == true && entrada.length() == posLeitura){
             return true;
         }
         //if(entrada.length() < posLeitura)return false;
-        ArrayList<Transicao> trans = e.getTransicoes();
+        ArrayList<Transicao> trans = estadoAtual.getTransicoes();
         
-        caminhoAntigo = caminhoVazio.get(estadoAtual);
-        caminhoVazio.set(estadoAtual, posLeitura);
+        caminhoAntigo = estadoAtual.getCaminhoVazio();
+        estadoAtual.setCaminhoVazio(posLeitura);
         for(int i=0;i<trans.size();i++){
             Transicao t = trans.get(i);
-            caminho.add(t.getEstadoDestino());
+            caminho.add(estados.indexOf(t.getEstadoDestino()));
             charLidos.add(t.getCaracter());
             if(t.valida(posLeitura,entrada)){
                 if(proximoEstado(t.getEstadoDestino(),entrada,posLeitura + t.incremento())){
@@ -177,14 +192,14 @@ public class AutomatoFinito implements ReconhecedorCadeia{
             charLidos.remove(charLidos.size()-1);
             caminho.remove(caminho.size()-1);
         }
-        caminhoVazio.set(estadoAtual,caminhoAntigo);
+        estadoAtual.setCaminhoVazio(caminhoAntigo);
         return false;
     } 
 
     @Override
     public void resetar() {
-        for(int i=0;i<caminhoVazio.size();i++){
-            caminhoVazio.set(i, -1);
+        for(Estado e : estados){
+            e.setCaminhoVazio(-1);
         }
         caminho.clear();
     }
@@ -206,36 +221,34 @@ public class AutomatoFinito implements ReconhecedorCadeia{
             for(Transicao t : estados.get(i).getTransicoes()){
                 String derivacao = "";
                 if(t.getCaracter() != null)derivacao+=t.getCaracter();
-                gramatica.addDerivacao((char)('A' + i), derivacao + (char)('A' + t.getEstadoDestino()));
+                gramatica.addDerivacao((char)('A' + i), derivacao + (char)('A' + estados.indexOf(t.getEstadoDestino())));
             }
             if(estados.get(i).isFinal())gramatica.addDerivacao((char)('A' + i), "");
         }
-        gramatica.tornarInicial(this.inicial);
+        gramatica.tornarInicial(estados.indexOf(inicial));
         return gramatica;
     }
     
     public String converterRegex(){
         int numFinais=0;
-        if(estados.get(inicial).isFinal())numFinais=2;
         for(Estado e : estados){
-            if(e.isFinal())numFinais++;
             e.juntarTransicoes();
             
         }
-        if(numFinais>1){
-            for(int i=0;i<estados.size();i++){
-                Estado e = estados.get(i);
-                if(e.isFinal()){
-                    e.setFinal(false);
-                    e.addTransicao(estados.size(),null,"");
-                }
+        
+        Estado novoFinal = new Estado(true);
+        for(int i=0;i<estados.size();i++){
+            Estado e = estados.get(i);
+            if(e.isFinal()){
+                e.setFinal(false);
+                e.addTransicao(novoFinal,null,"");
             }
-            estados.add(new Estado(true));    
         }
+        estados.add(novoFinal);
         for(int i=0;i<estados.size();i++){
             Estado atual = estados.get(i);
-            String loop = atual.getAutoTrans(i);
-            if(atual.isFinal()==false && inicial != i){
+            String loop = atual.getAutoTrans();
+            if(atual.isFinal()==false && inicial != atual){
                 ArrayList<Transicao> transOut = atual.getTransicoes();
                 for(int j=0;j<estados.size();j++){
                     if(i==j)continue;
@@ -244,10 +257,10 @@ public class AutomatoFinito implements ReconhecedorCadeia{
                     
                     for(int indexIn = 0;indexIn<transIn.size();indexIn++){
                         Transicao rin = transIn.get(indexIn);
-                        if(rin.getEstadoDestino()!=i)continue;
+                        if(rin.getEstadoDestino()!=atual)continue;
                         for(int indexOut = 0;indexOut<transOut.size();indexOut++){
                             Transicao rout = transOut.get(indexOut);
-                            if(rout.getEstadoDestino()==i)continue;
+                            if(rout.getEstadoDestino()==atual)continue;
                             in.addExpressao(rout.getEstadoDestino(), rin.getTransicao()+loop+rout.getTransicao());
                         }
                     }
@@ -255,9 +268,9 @@ public class AutomatoFinito implements ReconhecedorCadeia{
                 transOut.clear();
             }
         }
-        for(Transicao t : estados.get(inicial).getTransicoes()){
-            if(estados.get(t.getEstadoDestino()).isFinal()){
-                String loop = estados.get(inicial).getAutoTrans(inicial);
+        for(Transicao t : inicial.getTransicoes()){
+            if(t.getEstadoDestino().isFinal()){
+                String loop = inicial.getAutoTrans();
                 String out = t.getTransicao();
                 if(out.contains("|"))out = "(" + out+")";
                 return loop+out;
@@ -266,15 +279,19 @@ public class AutomatoFinito implements ReconhecedorCadeia{
         return "";
     }
 
-    private ArrayList<Transicao> transicoesDestino(int i) {
+    private ArrayList<Transicao> transicoesDestino(Estado origem) {
         ArrayList<Transicao> transicoes = new ArrayList<>();
         for(int j = 0; j<estados.size();j++){
-            Estado e = estados.get(j);
-            if(j == i)continue;
-            for(Transicao t : e.getTransicoes()){
-                if(t.getEstadoDestino() == i)transicoes.add(t);
+            Estado destino = estados.get(j);
+            if(origem == destino)continue;
+            for(Transicao t : destino.getTransicoes()){
+                if(t.getEstadoDestino() == origem)transicoes.add(t);
             }
         }
         return transicoes;
+    }
+
+    public void remover(Estado e) {
+        estados.remove(e);
     }
 }

@@ -190,11 +190,11 @@ public class Automato extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 536, Short.MAX_VALUE)
+            .addGap(0, 612, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 403, Short.MAX_VALUE)
+            .addGap(0, 414, Short.MAX_VALUE)
         );
 
         scrollPaneImage.setViewportView(jPanel1);
@@ -291,7 +291,8 @@ public class Automato extends javax.swing.JPanel {
         });
         jToolBar2.add(jButton4);
 
-        jButton5.setText("jButton5");
+        jButton5.setText("Converter para ER");
+        jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -310,7 +311,7 @@ public class Automato extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(scrollPaneImage, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+                    .addComponent(scrollPaneImage, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
                     .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -322,7 +323,7 @@ public class Automato extends javax.swing.JPanel {
                 .addGap(4, 4, 4)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPaneImage, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+                .addComponent(scrollPaneImage, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -746,7 +747,7 @@ public class Automato extends javax.swing.JPanel {
         AutomatoFinito automato = new AutomatoFinito();
         if(view.verificaEstados(needFinal)){
             view.montarAutomato(automato);
-            System.out.println(automato.converterRegex());
+            JOptionPane.showMessageDialog(this,"A expressão gerada é:\n" + automato.converterRegex());
         }else{
             JOptionPane.showMessageDialog(this.getParent(),"O autômato parece não estar completo.\n"
                     + "É necessario pelo menos 1 estado final e exatamente 1 estado inicial.");

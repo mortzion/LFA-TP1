@@ -3,13 +3,28 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/test/Primitive.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/src/Panels/ViewPanel.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/src/Core/Transicao.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/src/Automato/Transicao/Transicao.java</file>
             <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/test/RegEx.java</file>
             <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/test/Blank.java</file>
-            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/test/Repetition.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/src/Core/Estado.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/src/Core/ReconhecedorCadeia.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/src/Panels/AjudaExpressao.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/src/Core/RegexConverter.java</file>
             <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/test/Choice.java</file>
-            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/test/RegExParser.java</file>
             <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/test/Sequence.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/src/Panels/Derivacao.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/test/Primitive.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/src/lfa/Main.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/src/Core/MaquinaMoore.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/src/Core/AutomatoFinito.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/src/Panels/Automato.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/test/Repetition.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/src/Core/MaquinaMealy.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/test/RegExParser.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/src/Panels/Expressao.java</file>
+            <file>file:/C:/Users/mortz/Documents/GitHub/LFA-TP1/LFA/src/Core/Gramatica.java</file>
         </group>
     </open-files>
 </project-private>

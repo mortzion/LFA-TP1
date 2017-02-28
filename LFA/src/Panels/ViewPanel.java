@@ -286,7 +286,7 @@ public class ViewPanel extends JPanel {
             Core.Estado e = estadosAutomato.get(i);
             for(Core.Transicao t : e.getTransicoes()){
                 String condicao = t.getCaracter()==null?"λ":t.getCaracter().toString();
-                addTrans(estados.get(i),estados.get(t.getEstadoDestino()),condicao,"");
+                addTrans(estados.get(i),estados.get(estadosAutomato.indexOf(t.getEstadoDestino())),condicao,"");
             }
         }
         this.repaint();

@@ -50,8 +50,8 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Trabalho de LFA");
-        setMinimumSize(new java.awt.Dimension(500, 400));
-        setPreferredSize(new java.awt.Dimension(500, 400));
+        setMinimumSize(new java.awt.Dimension(600, 500));
+        setPreferredSize(new java.awt.Dimension(600, 500));
 
         jMenu1.setText("Novo");
 
@@ -111,11 +111,11 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
         );
 
         pack();
@@ -135,7 +135,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         int i = jTabbedPane1.getTabCount();
-        jTabbedPane1.add("Expressão " + numExpressao,new Expressao());
+        jTabbedPane1.add("Expressão " + numExpressao,new Expressao(this));
         jTabbedPane1.setTabComponentAt(i, new  ButtonTabComponent(jTabbedPane1, "Expressão " + numExpressao++));
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 

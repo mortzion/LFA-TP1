@@ -13,14 +13,13 @@ package Core;
 public class MaquinaMoore extends Core.AutomatoFinito{
 
     @Override
-    protected boolean proximoEstado(int estadoAtual, String entrada, int posLeitura) {
-        Estado e = estados.get(estadoAtual);
+    protected boolean proximoEstado(Estado estadoAtual, String entrada, int posLeitura) {
         char charLido;
-        saida = saida + e.getSaida();
+        saida = saida + estadoAtual.getSaida();
         if(posLeitura == entrada.length())return true;
         charLido = entrada.charAt(posLeitura);
         
-        for(Transicao t : e.getTransicoes()){
+        for(Transicao t : estadoAtual.getTransicoes()){
             if(t.getCaracter() == charLido){
                 return proximoEstado(t.getEstadoDestino(),entrada,posLeitura+t.incremento());
             }

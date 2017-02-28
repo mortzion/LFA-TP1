@@ -5,10 +5,12 @@
  */
 package Panels;
 
+import Core.RegexConverter;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import lfa.Main;
 
 /**
  *
@@ -18,10 +20,11 @@ public class Expressao extends javax.swing.JPanel {
     private static final String caracterInvalido = "Caracter Invalido na Expressão regular";
     private ArrayList<PanelTestExpression> stringTestes;
     private boolean expressaoValida=true;
-    public Expressao() {
+    private Main pai;
+    public Expressao(Main pai) {
         initComponents();
         stringTestes = new ArrayList<>();
-        
+        this.pai = pai;
         jPanel1.setLayout(new GridLayout(7,1));
         for(int i=0;i<7;i++){
             PanelTestExpression ptx = new PanelTestExpression(this, "");
@@ -49,6 +52,7 @@ public class Expressao extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -94,6 +98,13 @@ public class Expressao extends javax.swing.JPanel {
             }
         });
 
+        jButton3.setText("Converter para NDFA");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,7 +116,10 @@ public class Expressao extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -130,7 +144,9 @@ public class Expressao extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -154,10 +170,18 @@ public class Expressao extends javax.swing.JPanel {
         dialog.toFront();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if(expressaoValida){
+            RegexConverter r = new RegexConverter();
+            pai.criarAutomato(r.converter(jTextField1.getText()));
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
